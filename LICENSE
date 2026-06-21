@@ -1,0 +1,27 @@
+Educational Use Only License
+
+Copyright (c) 2026
+
+Permission is granted to use, copy, read, and analyze the materials in this
+repository only for education, security research, malware analysis, reverse
+engineering practice, and defensive purposes.
+
+The following uses are expressly prohibited:
+
+1. Using the materials to attack, disrupt, intrude into, or damage any system,
+   service, account, network, or third-party property.
+2. Using the materials for credential theft, account cracking, brute forcing,
+   DDoS, spam, fraud, evasion, persistence, or unauthorized access.
+3. Running executable samples on a real personal or production machine outside
+   an isolated and controlled analysis environment.
+4. Redistributing executable samples, reconstructed payloads, or modified
+   versions for operational use.
+5. Commercial use without explicit written permission from the repository
+   owner.
+
+The materials are provided "as is", without warranty of any kind. The user is
+solely responsible for complying with applicable laws and for any consequences
+arising from use, analysis, or execution of the materials.
+
+This repository is intended to improve understanding of unsafe software and to
+support defensive security work only.
