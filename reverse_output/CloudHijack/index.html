@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>云存储攻击器</title>
+  <script type="module" src="/main.js" defer></script>
+  <link rel="stylesheet" href="https://unpkg.com/mdui@2.0.3/mdui.css">
+  <script src="https://unpkg.com/mdui@2.0.3/mdui.global.js"></script>
+</head>
+
+<body>
+  <center>
+    <h1>云存储攻击器 Kitten/Nemo/CoCo专用</h1>
+    <p>注意：适用于所有创作工具！（神奇代码岛部分支持）</p>
+    <p>注意：为了生成多线程，需要以管理员身份运行！</p>
+  </center>
+  <mdui-checkbox>启动极速模式（实验性）</mdui-checkbox>
+  <mdui-text-field label="你要攻击的作品ID"></mdui-text-field>
+  <mdui-dropdown>
+    <mdui-button slot="trigger" full-width>立即开始</mdui-button>
+    <mdui-menu>
+      <mdui-menu-item ><mdui-badge>最快</mdui-badge> 01号服务器</mdui-menu-item>
+      <mdui-menu-item>02号服务器</mdui-menu-item>
+    </mdui-menu>
+  </mdui-dropdown>
+  <mdui-linear-progress style="display: none;"></mdui-linear-progress>
+  <mdui-text-field rows="20" label="等待日志..." readonly></mdui-text-field>
+</body>
+
+</html>

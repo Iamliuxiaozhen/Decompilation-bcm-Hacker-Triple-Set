@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>编程猫账号信息爆破器</title>
+  <script type="module" src="/main.js" defer></script>
+  <link rel="stylesheet" href="https://unpkg.com/mdui@2.0.3/mdui.css">
+  <script src="https://unpkg.com/mdui@2.0.3/mdui.global.js"></script>
+</head>
+
+<body>
+  <center>
+    <h1>编程猫账号信息爆破器</h1>
+    <p>注意：严禁用于违法！需要与远程服务器连接，所以请以管理员身份运行！</p>
+  </center>
+  <mdui-checkbox>启动极速模式（实验性）</mdui-checkbox>
+  <mdui-text-field label="你要爆破的编程猫ID"></mdui-text-field>
+  <mdui-dropdown>
+    <mdui-button slot="trigger" full-width>立即开始</mdui-button>
+    <mdui-menu>
+      <mdui-menu-item ><mdui-badge>最快</mdui-badge> 爆破01号服务器(US)</mdui-menu-item>
+      <mdui-menu-item>爆破02号服务器(CN-杭州)</mdui-menu-item>
+    </mdui-menu>
+  </mdui-dropdown>
+  <mdui-linear-progress style="display: none;"></mdui-linear-progress>
+  <mdui-text-field rows="20" label="等待日志..." readonly></mdui-text-field>
+</body>
+
+</html>

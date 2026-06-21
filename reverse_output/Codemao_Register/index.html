@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>编程猫账号批量注册器</title>
+  <link rel="stylesheet" href="https://unpkg.com/mdui@2.0.3/mdui.css">
+  <script src="https://unpkg.com/mdui@2.0.3/mdui.global.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+  <script type="module" src="/main.js" defer></script>
+
+</head>
+
+<body>
+  <mdui-layout>
+    <mdui-top-app-bar>
+      <mdui-top-app-bar-title>编程猫账号批量注册器</mdui-top-app-bar-title>
+      <div style="flex-grow: 1"></div>
+      <mdui-icon name='question_mark--outlined' style="cursor: pointer;" id="help"></mdui-icon>
+    </mdui-top-app-bar>
+
+    <mdui-layout-main style="min-height: 300px">
+      <p>你要注册的账号个数：</p>
+      <mdui-slider tickmarks step="10" min="50" max="200"></mdui-slider>
+      <mdui-divider></mdui-divider>
+      <p>你要注册的账号前缀（用户昵称显示为：前缀+第几个 如前缀为“猫猫”时，昵称为猫猫001、猫猫002......）：</p>
+      <mdui-text-field suffix="000" label="账号前缀"></mdui-text-field>
+      <mdui-divider></mdui-divider>
+      <p>你要注册的API服务器：</p>
+      <mdui-radio-group value="1">
+        <mdui-radio value="1">api.codemao.cn</mdui-radio>
+        <mdui-radio disabled>test-api.codemao.cn</mdui-radio>
+      </mdui-radio-group>
+      <mdui-divider></mdui-divider>
+      <p>你要发起请求的位置：</p>
+      <mdui-radio-group value="1">
+        <mdui-radio value="2" disabled>本地（不推荐）</mdui-radio>
+        <mdui-radio value="1">云服务器-US01</mdui-radio>
+        <mdui-radio value="2" disabled>云服务器-US02（敬请期待）</mdui-radio>
+        <mdui-radio value="3">云服务器-CNHZ</mdui-radio>
+      </mdui-radio-group>
+      <mdui-divider></mdui-divider>
+      <p>你要发起请求的线程数：</p>
+      <mdui-slider step="5" min="50" max="200"></mdui-slider>
+      <mdui-divider></mdui-divider>
+      <p>你要发起请求的方法：</p>
+      <mdui-radio-group value="1">
+        <mdui-radio value="2" disabled>直连（不推荐）</mdui-radio>
+        <mdui-radio value="1">SOCKS5代理池-免费</mdui-radio>
+        <mdui-radio value="2" disabled>SOCKS4代理池-免费（测试中）</mdui-radio>
+        <mdui-radio value="3">HTTP代理池-免费</mdui-radio>
+      </mdui-radio-group>
+      <mdui-divider></mdui-divider>
+      <p>隐藏远端IP（默认开启，防止封禁，关闭获得更大性能）：</p>
+      <mdui-switch checked unchecked-icon="remove_moderator--outlined"
+        checked-icon="verified_user--outlined"></mdui-switch>
+      <mdui-divider></mdui-divider>
+      <mdui-button full-width>开始注册</mdui-button>
+      <mdui-linear-progress style="display: none;" id="line"></mdui-linear-progress>
+      <mdui-circular-progress style="display: none;" id="circle"></mdui-circular-progress>
+      <mdui-text-field rows="10" label="日志" readonly style="display: none;" id="logger"></mdui-text-field>
+    </mdui-layout-main>
+  </mdui-layout>
+  <mdui-dialog close-on-overlay-click class="example-overlay">
+    <mdui-top-app-bar slot="header">
+      <mdui-top-app-bar-title>帮助</mdui-top-app-bar-title>
+    </mdui-top-app-bar>
+    <p>1. 禁止非法使用本软件，否则后果自负。</p>
+    <p>2. 禁止抓包本软件发出的数据包，否则后果自负。</p>
+    <p>3. 禁止对本软件进行二次分发，否则后果自负。</p>
+    <p>4. 本软件基于Socket套接字传输信息，需要提供管理员身份，否则无法运行。</p>
+    <p>5. 本软件基于<a href="https://github.com/tauri-apps/tauri" target="_blank">Tauri</a>开发，运行时遇到问题请联系开发者。</p>
+    <p>开发者：匿名</p>
+  </mdui-dialog>
+
+
+  <script>
+    const dialog = document.querySelector(".example-overlay");
+    const openButton = document.getElementById("help")
+
+    openButton.addEventListener("click", () => dialog.open = true);
+  </script>
+</body>
+
+</html>
