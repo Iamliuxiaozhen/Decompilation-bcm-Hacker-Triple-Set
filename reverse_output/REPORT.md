@@ -97,6 +97,16 @@ D:\Rust\codemao-register\src-tauri\target\release\deps\codemao_register.pdb
 
 观察到 Windows 沙盒中运行样本有闪退行为。结合静态字符串、前端代码和云沙箱报告，较可能原因如下：
 
+后续在 VMware 虚拟机中复测，环境为 Windows 10 Pro 22H2，操作系统内部版本 `19045.3803`。`vmrun-images/` 中截图显示三个样本均可成功启动并渲染界面，任务管理器中可见 `A Tauri App` 进程。这说明样本并非在所有 Windows 10 环境下必然闪退，Windows 沙盒闪退更可能是沙盒环境差异导致。
+
+VMware 复测观察：
+
+- `Codemao Register.exe` 可正常显示主界面，点击后进入伪注册日志流程。
+- `云变量劫持.exe` 可正常显示主界面，点击后进入伪攻击日志流程。
+- `MaoAccountGet.exe` 可正常显示主界面，点击后进入伪爆破日志流程。
+- 普通权限运行时，后端会返回“需要管理员身份”并显示在前端日志中。
+- 管理员路径下，`Codemao Register.exe` 与 `云变量劫持.exe` 可下载并启动 `yuanshen_setup_20231129204202.exe`，截图中可见原神启动器窗口。
+
 1. WebView2 初始化失败。
    - 三个样本均为 Tauri/WebView2 应用，启动窗口依赖 Microsoft Edge WebView2 Runtime。
    - 样本字符串和云沙箱报告中均出现 `WebView2: CoreWebView2Environment failed...`、`EmbeddedBrowserWebView.dll`、`Microsoft.MSEdgeWebView.Loader`、`CreateWebViewEnvironmentError` 等 WebView2 相关错误文本。
@@ -104,8 +114,8 @@ D:\Rust\codemao-register\src-tauri\target\release\deps\codemao_register.pdb
 
 2. 管理员权限检查失败。
    - 三个样本都包含 `net.exe session ... || Exit /b 1` 形式的管理员权限检查。
-   - 如果该检查在 Tauri 初始化或后端命令执行前运行，普通双击启动未提升权限时会直接退出，表现为闪退。
-   - 可通过在沙盒中分别“普通运行”和“以管理员身份运行”对比验证。如果管理员运行不再闪退，该原因优先级很高。
+   - VMware 截图显示，普通权限下点击任务后会在前端日志中显示“需要管理员身份”，窗口不会立刻退出。
+   - 因此管理员权限检查更能解释“点击后任务失败”，目前不再优先解释“启动即闪退”。若某些环境中后端错误未被前端捕获或 WebView 已异常退出，仍可能表现为闪退。
 
 3. 沙盒网络/远端地址不可用导致后端失败。
    - `MaoAccountGet.exe` 的 `chronocat.rem.asia` 当前无 DNS 记录。
@@ -137,4 +147,4 @@ Get-ChildItem C:\Windows\Temp\.register,C:\Windows\Temp\.genshin -Force -ErrorAc
 # 如果普通运行闪退、管理员运行不闪退，说明管理员权限检查是主要触发点。
 ```
 
-当前结论：闪退更像运行环境/权限导致的早期退出，尤其是 WebView2 初始化失败或管理员检查失败；没有证据表明闪退本身是额外恶意行为。需要 Windows 事件日志或 ProcMon 轨迹才能最终确认退出点。
+当前结论：结合 VMware 成功运行截图，Windows 沙盒闪退更像沙盒环境中的 WebView2 初始化/加载问题，而不是样本自身必然退出或额外恶意行为。管理员权限检查会导致点击后的任务失败，但在 VMware 中会被前端捕获并显示为“需要管理员身份”。需要 Windows 沙盒事件日志或 ProcMon 轨迹才能最终确认启动即退出点。
