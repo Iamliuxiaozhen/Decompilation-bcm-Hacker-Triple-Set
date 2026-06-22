@@ -70,3 +70,25 @@ D:\Rust\codemao-register\src-tauri\target\release\deps\codemao_register.pdb
 - 远端载荷才是主要风险点；当前分析没有执行样本，也没有下载远端载荷。
 
 建议不要在主机直接运行这些 EXE。若需要动态分析，应在隔离 Windows 虚拟机中抓取进程树、文件落地、网络请求和下载载荷哈希。
+
+## 补充排查：其他恶意行为
+
+基于进一步静态排查和上传的云沙箱报告，目前没有发现下载/执行逻辑之外的高置信恶意本地行为证据。
+
+已确认/修正：
+
+- `https://chronocat.rem.asia/` 当前无 DNS 记录；因此 `MaoAccountGet.exe` 的下载阶段在当前网络环境下大概率失败。
+- `yuanshen_setup_20231129204202.exe` 已鉴定为原神启动器；因此 `Codemao Register.exe` 与 `云变量劫持.exe` 可见下载目标本身不构成恶意载荷证据。
+
+未发现高置信证据的行为：
+
+- 未发现明确的开机自启动注册表写入、`Run`/`RunOnce`、启动目录投放或计划任务命令。
+- 未发现服务创建、驱动加载、Defender 排除项、hosts 篡改、`netsh` 防火墙修改等字符串或导入证据。
+- 未发现浏览器凭据窃取常见特征，如 `CryptUnprotectData`、`Login Data`、`Local State`、`Cookies` 数据库路径等高置信组合。
+- 未发现进程注入常见 API 组合，如 `CreateRemoteThread`、`WriteProcessMemory`、`VirtualAllocEx`。
+
+需要注意的残余风险：
+
+- 三个样本都导入 `CreateProcessW`、`ShellExecuteW`、Winsock 网络 API、`RegOpenKeyExW`/`RegQueryValueExW` 和 `GetAsyncKeyState`。其中大量能力可能来自 Tauri/WebView2/Windows 运行库，不能单独视为恶意行为证据。
+- 三个样本仍然具有误导性界面、管理员权限检查、下载并执行 `install.exe` 的结构；即使当前可见载荷无害或域名失效，这类结构仍然应按不可信程序处理。
+- 云沙箱报告均判定“未知”，动态部分显示只分析到 1 个进程、网络计数为 0、无释放文件。该结果说明沙箱没有观察到有效下载/落地/执行链，但不能证明样本安全。
